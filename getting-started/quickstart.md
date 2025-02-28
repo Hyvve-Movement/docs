@@ -8,9 +8,8 @@ This guide will help you get started with Hyvve quickly, whether you're a data c
 
 To start contributing data and earning tokens on Hyvve:
 
-1. Visit the [Hyvve platform](https://hyvve.io) and click "Sign Up"
-2. Connect your wallet (MetaMask or other supported wallets)
-3. Complete your profile setup by providing basic information
+1. Visit the [Hyvve platform](https://hyvve.io) and click "Launch App"
+2. Connect your wallet (Razor or other supported wallets)
 
 ### 2. Browse Available Campaigns
 
@@ -42,9 +41,8 @@ To start contributing data and earning tokens on Hyvve:
 
 To start creating data campaigns on Hyvve:
 
-1. Visit the [Hyvve platform](https://hyvve.io) and click "Sign Up"
-2. Connect your wallet (MetaMask or other supported wallets)
-3. Complete your profile setup, ensuring you select "Campaign Creator" during registration
+1. Visit the [Hyvve platform](https://hyvve.io) and click "Launch app"
+2. Connect your wallet (Razor or other supported wallets)
 
 ### 2. Launch Your First Campaign
 
@@ -63,12 +61,11 @@ To start creating data campaigns on Hyvve:
 
 1. Access your "Campaign Dashboard" to track progress
 2. View real-time analytics on submissions, verification rates, and more
-3. Make adjustments to your campaign if needed (extend duration, increase rewards, etc.)
 
 ### 4. Export Verified Data
 
 1. Once your campaign reaches its completion date or goal, click "Export Data"
-2. Use your campaign private key to decrypt the data set
+2. Use your campaign RSA private key to decrypt the data set
 3. Download your verified, AI-ready data in your preferred format
 
 ## Next Steps

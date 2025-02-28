@@ -254,11 +254,3 @@ To help you prepare your data:
 - **Image Editors**: [GIMP](https://www.gimp.org/) (free), [Photopea](https://www.photopea.com/) (online)
 - **Image Metadata Viewers**: [EXIF Viewer](https://exifdata.com/)
 
-## Need Help?
-
-If you're struggling with data formatting:
-
-1. Check the campaign's FAQ section
-2. Refer to example submissions if provided
-3. Contact the campaign creator through the platform
-4. Visit our [community forum](https://community.hyvve.io) for peer support

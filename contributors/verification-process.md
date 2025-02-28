@@ -52,7 +52,7 @@ Our AI verification system analyzes your submission based on the campaign's requ
    - Image quality assessment
    - Content recognition and classification
    - Authenticity verification (checking for manipulation or AI generation)
-2. **OCR (if applicable)**: Optical Character Recognition for images containing text, verifying:
+2. **OCR**: Optical Character Recognition for images containing text, verifying:
    - Text legibility
    - Content of text elements
    - Compliance with campaign requirements
@@ -71,7 +71,6 @@ Based on the AI analysis, each submission receives a verification result:
 1. **Verification Status**:
 
    - ✅ **Verified**: The submission meets all requirements and is accepted.
-   - ⚠️ **Partially Verified**: The submission meets some requirements but needs improvement in specific areas.
    - ❌ **Rejected**: The submission does not meet the minimum requirements.
 
 2. **Quality Score**:
@@ -158,16 +157,11 @@ To maximize your chances of successful verification:
 2. **Follow Formatting Guidelines**: Adhere to the data formatting guidelines provided in each campaign.
 3. **Self-Verify**: Check your own submissions against the verification criteria before submitting.
 4. **Start Small**: Begin with simpler campaigns to build your reputation before tackling complex ones.
-5. **Learn from Feedback**: Use rejection feedback as a learning opportunity to improve future submissions.
-6. **Join the Community**: Participate in our community forums to learn from experienced contributors.
 
 ## Verification FAQs
 
-**Q: Can I see exactly how my submission was scored?**
-A: Yes, detailed scoring breakdowns are available on your submission details page.
-
 **Q: Does Hyvve keep my data after verification?**
-A: Your data remains encrypted on IPFS and is only accessible to the campaign creator with their private key.
+A: Your data remains encrypted on IPFS and is only accessible to the campaign creator with their RSA private key.
 
 **Q: How are AI-generated submissions detected?**
 A: Our system uses specialized detection algorithms that analyze patterns, consistency, and linguistic markers typical of AI-generated content.
@@ -178,86 +172,3 @@ A: No, verification is performed by our independent system. Campaign creators ca
 **Q: What happens if the verification system goes down?**
 A: We have redundant verification systems. In rare cases of system outages, submissions are queued and processed when service resumes, with no penalties to contributors.
 
-## Technical Details for Advanced Users
-
-For those interested in the technical workings of our verification system:
-
-### Verification Smart Contract Interaction
-
-```move
-// Example of a verification attestation record on-chain
-module hyvve::verification {
-    // ... existing code ...
-
-    // This function is called by our secure verifier after AI analysis
-    public entry fun attest_verification(
-        verifier: &signer,
-        campaign_id: u64,
-        submission_id: u64,
-        ipfs_hash: string::String,
-        verification_result: bool,
-        quality_score: u64,
-        verification_data: string::String,
-    ) {
-        // Only authorized verifiers can call this function
-        assert!(has_verifier_role(verifier), error::permission_denied(ENOT_AUTHORIZED));
-
-        // Create verification record
-        let verification_id = next_verification_id();
-        let verification_record = VerificationRecord {
-            id: verification_id,
-            campaign_id,
-            submission_id,
-            ipfs_hash,
-            ai_verification_result: verification_result,
-            quality_score,
-            verifier: signer::address_of(verifier),
-            timestamp: timestamp::now_seconds(),
-            verification_data,
-        };
-
-        // Store record on-chain
-        table::add(&mut verification_records, verification_id, verification_record);
-
-        // Emit verification event
-        event::emit(VerificationCompletedEvent {
-            verification_id,
-            campaign_id,
-            submission_id,
-            result: verification_result,
-            quality_score,
-        });
-
-        // If verified, trigger reward distribution
-        if (verification_result) {
-            campaign::trigger_reward(verifier, campaign_id, submission_id, quality_score);
-        };
-    }
-
-    // ... more contract functions ...
-}
-```
-
-### Verification APIs
-
-Our verification system exposes APIs that can be used by developers building on top of Hyvve:
-
-```
-GET /api/v1/verification/status/{submissionId}
-```
-
-Response:
-
-```json
-{
-  "submission_id": "1234567890",
-  "status": "verified",
-  "quality_score": 87,
-  "verification_time": "2023-06-15T14:30:00Z",
-  "feedback": {
-    "strengths": ["High clarity", "Excellent relevance", "Good formatting"],
-    "improvement_areas": ["Minor spelling issues"]
-  },
-  "attestation_tx": "0x123abc..."
-}
-```
