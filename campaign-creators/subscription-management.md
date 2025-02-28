@@ -1,4 +1,4 @@
-![Subscription Modal](assets/subscription.png)
+![Subscription Modal](../assets/subscription.png)
 
 # Subscription Management
 
