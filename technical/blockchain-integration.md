@@ -287,7 +287,7 @@ The blockchain integration includes several security measures:
 1. **Multi-Signature Authorization**: Critical operations require multiple signatures
 2. **Rate Limiting**: Prevents spam attacks on the contract system
 3. **Timelock Mechanisms**: Major updates to the protocol include a delay period
-4. **Formal Verification**: Our core contracts have undergone formal verification
+4. **Formal Verification**: Our core contracts have undergone formal verification 
 
 ## Developer Resources
 
