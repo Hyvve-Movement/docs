@@ -1,3 +1,5 @@
+![Subscription Modal](assets/subscription.png)
+
 # Subscription Management
 
 As a campaign creator on Hyvve, you can access premium features through our subscription system. This guide explains how subscriptions work and how to manage them effectively.
