@@ -1,6 +1,6 @@
 # Hyvve Documentation
 
-![Hyvve Logo](assets/hyvve-logo.png)
+![Hyvve Logo](assets/hyvve-header.png)
 
 **Unlock Data for AI. Contribute and Earn with Hyvve** 🚀
 
