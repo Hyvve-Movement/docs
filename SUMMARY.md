@@ -7,18 +7,12 @@
 
 ## For Contributors
 
-- [Overview](contributors/overview.md)
-- [How to Contribute Data](contributors/how-to-contribute.md)
 - [Data Formatting Guidelines](contributors/data-formatting.md)
 - [Verification Process](contributors/verification-process.md)
 - [Reputation System](contributors/reputation-system.md)
-- [Earning Tokens](contributors/earning-tokens.md)
 
 ## For Campaign Creators
 
-- [Overview](campaign-creators/overview.md)
-- [Creating a Campaign](campaign-creators/creating-campaign.md)
-- [Campaign Settings & Configuration](campaign-creators/campaign-settings.md)
 - [Subscription Management](campaign-creators/subscription-management.md)
 - [Data Export & Decryption](campaign-creators/data-export.md)
 - [Campaign Analytics](campaign-creators/analytics.md)
