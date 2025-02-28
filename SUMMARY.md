@@ -4,7 +4,6 @@
 
 - [Introduction](README.md)
 - [Quickstart Guide](getting-started/quickstart.md)
-- [Installation](getting-started/installation.md)
 
 ## For Contributors
 
@@ -33,24 +32,3 @@
 - [Encryption System](technical/encryption-system.md)
 - [Data Storage (IPFS)](technical/data-storage.md)
 - [AI Verification Models](technical/ai-verification.md)
-
-## API Reference
-
-- [Overview](api/overview.md)
-- [Authentication](api/authentication.md)
-- [Contributors API](api/contributors.md)
-- [Campaigns API](api/campaigns.md)
-- [Data API](api/data.md)
-
-## Security
-
-- [Security Model](security/security-model.md)
-- [Encryption Details](security/encryption-details.md)
-- [Best Practices](security/best-practices.md)
-
-## Support & Community
-
-- [FAQ](support/faq.md)
-- [Troubleshooting](support/troubleshooting.md)
-- [Community Guidelines](support/community.md)
-- [Contact Support](support/contact.md)
