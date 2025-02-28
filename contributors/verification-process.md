@@ -171,4 +171,3 @@ A: No, verification is performed by our independent system. Campaign creators ca
 
 **Q: What happens if the verification system goes down?**
 A: We have redundant verification systems. In rare cases of system outages, submissions are queued and processed when service resumes, with no penalties to contributors.
-
