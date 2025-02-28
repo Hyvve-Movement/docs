@@ -29,6 +29,7 @@
 - [Architecture Overview](technical/architecture-overview.md)
 - [Blockchain Integration](technical/blockchain-integration.md)
 - [Smart Contracts](technical/smart-contracts.md)
+- [CLI Tool](technical/cli-tool.md)
 - [Encryption System](technical/encryption-system.md)
 - [Data Storage (IPFS)](technical/data-storage.md)
 - [AI Verification Models](technical/ai-verification.md)

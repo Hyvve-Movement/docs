@@ -4,11 +4,11 @@ Hyvve leverages the power of blockchain technology to create a secure, transpare
 
 ## Blockchain Architecture
 
-Hyvve is built on a dual-blockchain architecture:
+Hyvve is built on the Aptos blockchain with integration to the Movement Network:
 
-### Movement Blockchain
+### Aptos Blockchain Core
 
-The Movement blockchain serves as the primary layer for:
+The Aptos blockchain serves as the primary layer for:
 
 - Smart contract execution
 - Token transactions
@@ -16,80 +16,63 @@ The Movement blockchain serves as the primary layer for:
 - Contributor reputation tracking
 - Verification attestations
 
-Movement's EVM compatibility enables us to deploy sophisticated smart contracts while maintaining high throughput and low transaction costs.
+Aptos's Move VM provides a secure and efficient environment for our smart contracts, offering high throughput and low transaction costs.
 
-### Celestia Blockchain
+### Movement Network Integration
 
-Celestia functions as our Data Availability (DA) layer:
+Hyvve is integrated with the Movement Network, which provides:
 
-- Ensures data references and metadata are efficiently stored
-- Provides scalability for our decentralized data marketplace
-- Enables efficient validation of data availability without requiring nodes to download all data
-- Reduces on-chain storage costs while maintaining cryptographic guarantees
+- Enhanced scalability for our data marketplace
+- Secure transaction processing
+- Compatible infrastructure with the existing Aptos ecosystem
+- Movement CLI tools for easy interaction with our contracts
+
+## Project Structure
+
+The Hyvve smart contract codebase is organized as follows:
+
+```
+├── sources/                # Move smart contracts
+│   ├── campaign_manager.move      # Campaign creation and management
+│   ├── campaign_state.move        # Campaign state tracking
+│   ├── contribution_manager.move  # Contribution submission and verification
+│   ├── escrow_manager.move        # Funds management and reward distribution
+│   ├── reputation.move            # Contributor reputation system
+│   ├── subscription.move          # Subscription management
+│   └── verifier.move              # Data verification logic
+├── scripts/                # TypeScript CLI tools
+│   ├── cli/                # Command-line interface scripts
+│   │   ├── campaign/       # Campaign management commands
+│   │   ├── contribution/   # Contribution submission commands
+│   │   ├── profile/        # User profile management
+│   │   ├── reputation/     # Reputation management
+│   │   ├── stats/          # Statistics and reporting
+│   │   └── verifier/       # Verification tools
+│   ├── config/             # Configuration files
+│   ├── setup/              # Setup and initialization scripts
+│   └── utils/              # Utility functions
+└── Move.toml               # Move package configuration
+```
 
 ## Smart Contract Infrastructure
 
 The Hyvve platform relies on a system of interconnected smart contracts:
 
-### Campaign Contract
+### Campaign Manager
+
+The `campaign_manager.move` module handles campaign creation and management:
 
 ```move
-module hyvve::campaign {
+module hyvve::campaign_manager {
     use std::string;
     use aptos_framework::coin;
     use aptos_std::table::{Self, Table};
     use aptos_framework::account;
     use aptos_framework::event;
 
-    // Campaign structure definition
-    struct Campaign has key, store {
-        id: u64,
-        creator: address,
-        title: string::String,
-        description: string::String,
-        reward_per_submission: u64,
-        total_budget: u64,
-        remaining_budget: u64,
-        verification_criteria: string::String,
-        start_time: u64,
-        end_time: u64,
-        active: bool,
-        submissions: Table<u64, Submission>,
-        next_submission_id: u64,
-    }
+    // Campaign structure and functions for campaign management
 
-    // Submission structure
-    struct Submission has store {
-        id: u64,
-        contributor: address,
-        ipfs_hash: string::String,
-        verified: bool,
-        verification_time: u64,
-        rewarded: bool,
-    }
-
-    // Events
-    struct CampaignCreatedEvent has drop, store {
-        campaign_id: u64,
-        creator: address,
-        title: string::String,
-        total_budget: u64,
-    }
-
-    struct SubmissionEvent has drop, store {
-        campaign_id: u64,
-        submission_id: u64,
-        contributor: address,
-        ipfs_hash: string::String,
-    }
-
-    struct VerificationEvent has drop, store {
-        campaign_id: u64,
-        submission_id: u64,
-        verified: bool,
-    }
-
-    // Function to create a new campaign
+    // Functions for campaign creation, management, and fund allocation
     public entry fun create_campaign(
         account: &signer,
         title: string::String,
@@ -103,37 +86,64 @@ module hyvve::campaign {
         // Implementation details...
     }
 
-    // Function to submit data to a campaign
-    public entry fun submit_data(
-        account: &signer,
-        campaign_id: u64,
-        ipfs_hash: string::String,
-    ) {
-        // Implementation details...
-    }
-
-    // Function for verifiers to validate submissions
-    public entry fun verify_submission(
-        account: &signer,
-        campaign_id: u64,
-        submission_id: u64,
-        is_valid: bool,
-    ) {
-        // Implementation details...
-    }
-
-    // Function to distribute rewards
-    public entry fun distribute_reward(
-        account: &signer,
-        campaign_id: u64,
-        submission_id: u64,
-    ) {
-        // Implementation details...
-    }
+    // Additional campaign management functions...
 }
 ```
 
-### Reputation Contract
+### Contribution Manager
+
+The `contribution_manager.move` module handles data contributions:
+
+```move
+module hyvve::contribution_manager {
+    use std::string;
+    use aptos_framework::account;
+    use aptos_framework::event;
+    use hyvve::campaign_manager;
+
+    // Contribution structure and functions for submission management
+
+    // Submit a contribution to a campaign
+    public entry fun submit_contribution(
+        account: &signer,
+        campaign_id: u64,
+        data_url: string::String,
+    ) {
+        // Implementation details...
+    }
+
+    // Additional contribution management functions...
+}
+```
+
+### Escrow Manager
+
+The `escrow_manager.move` module handles secure fund management:
+
+```move
+module hyvve::escrow_manager {
+    use aptos_framework::coin;
+    use aptos_framework::account;
+    use hyvve::campaign_manager;
+
+    // Functions for secure escrow of funds and reward distribution
+
+    // Distribute rewards for verified contributions
+    public entry fun distribute_reward(
+        verifier: &signer,
+        campaign_id: u64,
+        contribution_id: u64,
+    ) {
+        // Implementation details...
+    }
+
+    // Additional escrow management functions...
+}
+```
+
+### Reputation System
+
+The `reputation.move` module manages contributor reputation:
 
 ```move
 module hyvve::reputation {
@@ -141,25 +151,7 @@ module hyvve::reputation {
     use aptos_framework::account;
     use aptos_framework::event;
 
-    // Reputation structure
-    struct Reputation has key {
-        score: u64,
-        total_submissions: u64,
-        verified_submissions: u64,
-        badges: vector<string::String>,
-    }
-
-    // Events
-    struct ReputationUpdateEvent has drop, store {
-        user: address,
-        new_score: u64,
-        reason: string::String,
-    }
-
-    struct BadgeAwardedEvent has drop, store {
-        user: address,
-        badge: string::String,
-    }
+    // Reputation structure and functions for tracking contributor quality
 
     // Initialize reputation for a new user
     public entry fun initialize_reputation(account: &signer) {
@@ -176,66 +168,89 @@ module hyvve::reputation {
         // Implementation details...
     }
 
-    // Award badges based on achievements
-    public entry fun award_badge(
-        admin: &signer,
-        user: address,
-        badge: string::String,
-    ) {
-        // Implementation details...
-    }
+    // Additional reputation management functions...
 }
 ```
 
-### Verification Contract
+### Verifier
+
+The `verifier.move` module handles the verification process:
 
 ```move
-module hyvve::verification {
+module hyvve::verifier {
     use std::string;
     use aptos_framework::account;
     use aptos_framework::event;
-    use hyvve::campaign;
+    use hyvve::contribution_manager;
 
-    // Verification record structure
-    struct VerificationRecord has key, store {
-        id: u64,
-        campaign_id: u64,
-        submission_id: u64,
-        ipfs_hash: string::String,
-        ai_verification_result: bool,
-        verifier: address,
-        timestamp: u64,
-        verification_data: string::String,
-    }
+    // Verification structure and functions
 
-    // Events
-    struct VerificationCompletedEvent has drop, store {
-        verification_id: u64,
-        campaign_id: u64,
-        submission_id: u64,
-        result: bool,
-    }
-
-    // Perform AI verification and record results on-chain
-    public entry fun verify_submission(
-        verifier: &signer,
-        campaign_id: u64,
-        submission_id: u64,
-        ipfs_hash: string::String,
-        verification_result: bool,
-        verification_data: string::String,
+    // Register a new verifier
+    public entry fun register_verifier(
+        admin: &signer,
+        verifier_address: address,
     ) {
         // Implementation details...
     }
 
-    // Get verification record
-    public fun get_verification(
-        verification_id: u64
-    ): VerificationRecord {
+    // Verify a contribution
+    public entry fun verify_contribution(
+        verifier: &signer,
+        campaign_id: u64,
+        contribution_id: u64,
+        is_valid: bool,
+        quality_score: u64,
+    ) {
         // Implementation details...
     }
+
+    // Additional verification functions...
 }
 ```
+
+## CLI Tool for Blockchain Interaction
+
+Hyvve provides a comprehensive CLI tool for interacting with the smart contracts:
+
+### Installation
+
+```bash
+# Navigate to the project directory
+cd hyvve-contracts
+
+# Install dependencies
+npm install
+
+# Install the CLI globally
+node scripts/setup/install-cli.js
+
+# Setup Movement CLI
+movement init --skip-faucet
+```
+
+### Campaign Management Commands
+
+| Command                                    | Description                               |
+| ------------------------------------------ | ----------------------------------------- |
+| `hyvve-cli campaign create_campaign`       | Create a new data collection campaign     |
+| `hyvve-cli campaign list_active_campaigns` | List all active campaigns                 |
+| `hyvve-cli campaign get_campaign_pubkey`   | Get the public key for a campaign         |
+| `hyvve-cli campaign get_remaining_budget`  | Check the remaining budget for a campaign |
+
+### Contribution Management Commands
+
+| Command                                      | Description                                  |
+| -------------------------------------------- | -------------------------------------------- |
+| `hyvve-cli contribution submit_contribution` | Submit a new data contribution to a campaign |
+| `hyvve-cli contribution get_contributions`   | View contributions for a campaign            |
+
+### Verifier Management Commands
+
+| Command                                    | Description             |
+| ------------------------------------------ | ----------------------- |
+| `hyvve-cli verifier register_verifier`     | Register a new verifier |
+| `hyvve-cli verifier register_verifier_key` | Register a verifier key |
+| `hyvve-cli verifier check_verifier`        | Check verifier status   |
 
 ## On-Chain Verification Process
 
@@ -243,65 +258,71 @@ The verification process in Hyvve combines off-chain AI processing with on-chain
 
 1. **Data Submission**:
 
-   - Contributor submits data through the frontend
-   - Data is encrypted and stored on IPFS
-   - IPFS hash and metadata are submitted to the Campaign Contract
+   - Contributor submits data through the frontend or CLI
+   - Data is encrypted and stored securely
+   - A reference to the data is submitted to the `contribution_manager` contract
 
 2. **AI Verification**:
 
-   - Secure verifier nodes retrieve the data from IPFS
+   - Verifier nodes retrieve the data
    - AI models analyze the data for authenticity and quality
-   - Verification results are prepared for on-chain attestation
+   - Verification results are prepared for on-chain registration
 
 3. **On-Chain Attestation**:
 
-   - Verification results are submitted to the Verification Contract
-   - A VerificationRecord is created and linked to the submission
+   - Verification results are submitted to the `verifier` contract
+   - A verification record is created and linked to the contribution
    - Events are emitted to notify relevant parties
 
 4. **Reward Distribution**:
-   - Based on verification results, the Campaign Contract releases tokens
-   - Contributor's reputation is updated through the Reputation Contract
+   - Based on verification results, the `escrow_manager` releases tokens
+   - Contributor's reputation is updated through the `reputation` module
    - Transaction history is permanently recorded on-chain
 
-## Token Economics
+## Key Features
 
-Hyvve uses a token-based incentive system:
+1. **Secure Escrow System**: Funds are locked in escrow until contributions are verified
+2. **Quality-Based Rewards**: Contributors are rewarded based on the quality of their submissions
+3. **Reputation System**: Track and reward reliable contributors
+4. **Automated Verification**: Built-in verification mechanisms to ensure data quality
+5. **Platform Fee Structure**: Configurable fee structure for platform sustainability
 
-- **MOVE Tokens**: Used for rewards, governance, and platform fees
-- **Staking**: Campaign creators can stake tokens to enhance campaign visibility
-- **Reputation Staking**: Contributors can stake tokens to vouch for their data quality
+## Environment Configuration
 
-## Cross-Chain Interoperability
+The project uses environment variables for configuration:
 
-While Hyvve primarily operates on Movement and Celestia, we've designed our system with cross-chain interoperability in mind:
+```
+CAMPAIGN_MANAGER_ADDRESS=0x1
+PRIVATE_KEY=0x1
 
-1. **Bridge Contracts**: Allow for interaction with other blockchain ecosystems
-2. **Token Wrapping**: Enables the use of cross-chain tokens within our ecosystem
-3. **Unified Identity**: Contributors can maintain their reputation across different blockchain networks
+VERIFIER_ADDRESS=
+VERIFIER_PRIVATE_KEY=
+
+NETWORK=testnet
+RPC_URL=https://aptos.testnet.bardock.movementlabs.xyz/v1
+```
 
 ## Security Considerations
 
 The blockchain integration includes several security measures:
 
-1. **Multi-Signature Authorization**: Critical operations require multiple signatures
-2. **Rate Limiting**: Prevents spam attacks on the contract system
-3. **Timelock Mechanisms**: Major updates to the protocol include a delay period
-4. **Formal Verification**: Our core contracts have undergone formal verification 
+1. **Secure Escrow**: Funds are locked in escrow until contributions are verified
+2. **Verifier Authentication**: Only registered verifiers can validate contributions
+3. **Rate Limiting**: Prevents spam attacks on the contract system
+4. **Access Control**: Clear separation of roles and permissions in all contracts
 
 ## Developer Resources
 
 For developers looking to interact with Hyvve's blockchain components:
 
-- **Contract ABIs**: Available in our [GitHub repository](https://github.com/Hyvve-Movement/hyvve-contracts)
-- **SDK**: We provide JavaScript and Python SDKs for easier integration
-- **GraphQL API**: Query blockchain data through our specialized API
+- **Smart Contracts**: Available in our [GitHub repository](https://github.com/Hyvve-Movement/hyvve-contracts)
+- **CLI Tool**: Comprehensive command-line interface for interacting with the platform
+- **Documentation**: Detailed documentation for all smart contract modules and functions
 
 ## Future Enhancements
 
 We are working on several improvements to our blockchain integration:
 
-1. **Layer 2 Scaling**: Implementing zero-knowledge proof systems for improved efficiency
-2. **DAO Governance**: Transitioning to a fully decentralized governance model
-3. **Cross-Chain Data Marketplaces**: Expanding to additional blockchain ecosystems
-4. **Decentralized Verification Nodes**: Distributing the verification process more widely
+1. **Enhanced Scalability**: Optimizing contract performance for high throughput
+2. **Advanced Verification Mechanisms**: Implementing more sophisticated verification algorithms
+3. **Decentralized Governance**: Introducing governance mechanisms for platform decisions
