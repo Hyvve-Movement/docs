@@ -1,0 +1,26 @@
+# OS specific files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Node modules (if you use any Node.js scripts)
+node_modules/
+
+# GitBook specific
+_book/
+.bookignore
+*.epub
+*.mobi
+*.pdf
+
+# IDE and editor folders
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Temporary files
+*.tmp
+*.temp
+*.bak 

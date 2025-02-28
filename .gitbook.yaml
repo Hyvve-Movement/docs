@@ -1,0 +1,10 @@
+root: ./
+
+structure:
+  readme: README.md
+  summary: SUMMARY.md
+
+redirects:
+  tech/architecture: technical/architecture-overview.md
+  contributors/guide: contributors/how-to-contribute.md
+  campaign-creators/guide: campaign-creators/creating-campaign.md
