@@ -4,19 +4,7 @@ Hyvve leverages the power of blockchain technology to create a secure, transpare
 
 ## Blockchain Architecture
 
-Hyvve is built on the Aptos blockchain with integration to the Movement Network:
-
-### Aptos Blockchain Core
-
-The Aptos blockchain serves as the primary layer for:
-
-- Smart contract execution
-- Token transactions
-- Campaign management
-- Contributor reputation tracking
-- Verification attestations
-
-Aptos's Move VM provides a secure and efficient environment for our smart contracts, offering high throughput and low transaction costs.
+Hyvve is built on the Movement Network, with Celestia as the data availability layer.
 
 ### Movement Network Integration
 
