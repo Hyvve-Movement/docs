@@ -16,10 +16,10 @@ To start contributing data and earning tokens on Hyvve:
 1. Navigate to the "Campaigns" section from the main dashboard
 2. Browse through available campaigns based on your interests and skills
 3. Click on a campaign to view its details:
-   - Required data type(s)
-   - Reward structure
-   - Campaign duration
-   - Verification criteria
+   * Required data type(s)
+   * Reward structure
+   * Campaign duration
+   * Verification criteria
 
 ### 3. Submit Your First Contribution
 
@@ -48,11 +48,11 @@ To start creating data campaigns on Hyvve:
 
 1. From your dashboard, click "Create Campaign"
 2. Define your campaign parameters:
-   - Campaign name and description
-   - Required data type(s) and format
-   - Verification criteria
-   - Campaign duration
-   - Token reward per verified submission
+   * Campaign name and description
+   * Required data type(s) and format
+   * Verification criteria
+   * Campaign duration
+   * Token reward per verified submission
 3. Fund your campaign with the required tokens
 4. Review and confirm your campaign settings
 5. Click "Launch Campaign" to make it live
@@ -70,6 +70,4 @@ To start creating data campaigns on Hyvve:
 
 ## Next Steps
 
-- For contributors: Learn more about [Data Formatting Guidelines](../contributors/data-formatting.md)
-- For campaign creators: Explore [Campaign Settings & Configuration](../campaign-creators/campaign-settings.md)
-- For everyone: Understand our [Security Model](../security/security-model.md)
+* For contributors: Learn more about [Data Formatting Guidelines](../contributors/data-formatting.md)
