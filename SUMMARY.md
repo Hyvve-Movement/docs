@@ -19,7 +19,6 @@
 
 ## Technical Documentation
 
-* [Architecture Overview](technical-documentation/architecture-overview.md)
 * [Blockchain Integration](technical/blockchain-integration.md)
 * [Smart Contracts](technical/smart-contracts.md)
 * [CLI Tool](technical/cli-tool.md)
