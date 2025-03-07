@@ -24,5 +24,3 @@
 * [Smart Contracts](technical/smart-contracts.md)
 * [CLI Tool](technical/cli-tool.md)
 * [Encryption System](technical/encryption-system.md)
-* [Data Storage (IPFS)](technical-documentation/data-storage-ipfs.md)
-* [AI Verification Models](technical-documentation/ai-verification-models.md)
